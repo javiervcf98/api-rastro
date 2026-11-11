@@ -13,3 +13,12 @@ respondido el middleware de errores (el punto 5 de `index.ts`): el `ping`
 a MongoDB lanza un error a los 5 segundos, Express lo pasa a ese
 middleware, que escribe el error completo en la terminal y responde al
 cliente solo con un mensaje genérico.
+
+//EJERCICIO 2//
+¿Por qué `?price=380` no encuentra el iPhone?
+Porque todo lo que llega en una URL es texto: `req.query` es
+`{ price: "380" }`, con el precio como texto. En MongoDB el precio está
+guardado como número (`380`), y MongoDB no considera iguales un texto y
+un número, así que no encuentra nada (igual que la lámpara del B4.4).
+Con `category` funciona porque la categoría también está guardada como
+texto.
