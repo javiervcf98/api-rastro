@@ -32,3 +32,12 @@ peticiones con Postman, así que si la API guardara lo que llega, alguien
 podría publicar un anuncio con 9999 visitas para que parezca popular, o
 marcarlo como SOLD o RESERVED saltándose el proceso de ofertas. Por eso
 el anuncio se construye campo a campo y nunca se guarda `req.body` tal cual.
+
+//EJERCICIO 4//
+¿Debe el PATCH cambiar también el precio copiado en la oferta?
+
+No. El precio guardado en la oferta es una foto del momento: es el precio
+que tenía el iPhone cuando Sara hizo su oferta (380 €). Si lo cambiáramos
+a 350 €, parecería que Sara pidió otra rebaja distinta y perderíamos esa
+información. Es como el precio de una línea de pedido en Furniro: si el
+producto cambia de precio después, el pedido ya hecho no cambia.
