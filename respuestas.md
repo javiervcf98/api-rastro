@@ -22,3 +22,13 @@ guardado como número (`380`), y MongoDB no considera iguales un texto y
 un número, así que no encuentra nada (igual que la lámpara del B4.4).
 Con `category` funciona porque la categoría también está guardada como
 texto.
+
+//EJERCICIO 3//
+¿Por qué la API ignora `views` y `status`?
+
+Porque esos valores los tiene que decidir la API, no el cliente: un anuncio
+nuevo siempre empieza AVAILABLE y con 0 visitas. Cualquiera puede enviar
+peticiones con Postman, así que si la API guardara lo que llega, alguien
+podría publicar un anuncio con 9999 visitas para que parezca popular, o
+marcarlo como SOLD o RESERVED saltándose el proceso de ofertas. Por eso
+el anuncio se construye campo a campo y nunca se guarda `req.body` tal cual.
