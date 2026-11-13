@@ -41,3 +41,25 @@ que tenía el iPhone cuando Sara hizo su oferta (380 €). Si lo cambiáramos
 a 350 €, parecería que Sara pidió otra rebaja distinta y perderíamos esa
 información. Es como el precio de una línea de pedido en Furniro: si el
 producto cambia de precio después, el pedido ya hecho no cambia.
+
+//EJERCICIO 5//
+¿Por qué ofertar por un anuncio vendido es 409 y no 400?
+
+Porque la petición está bien hecha: los ids son correctos y existen, y el
+importe es válido. El problema no es lo que envía el cliente, sino el estado
+actual del anuncio (SOLD). Si el anuncio estuviera AVAILABLE, la misma
+petición daría 201. El 400 es para peticiones mal hechas que el cliente
+tiene que corregir; el 409, para peticiones correctas que chocan con el
+estado actual.
+
+//EJERCICIO 6//
+¿Qué comprueba MongoDB y qué he comprobado yo?
+MongoDB comprueba lo que se le pide con índices únicos: por ejemplo, el
+índice único sobre `email` impide dos usuarios con el mismo email, y nunca
+deja repetir un `_id`.
+
+Todo lo demás lo he tenido que comprobar yo en el código, porque MongoDB lo
+guardaría sin quejarse: por ejemplo, que el `sellerId` de un anuncio nuevo
+exista en `users` (el vendedor fantasma) o que el `price` sea un número y
+no un texto (la lámpara). También que los campos obligatorios estén y que
+el anuncio esté AVAILABLE antes de aceptar una oferta.
