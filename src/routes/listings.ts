@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { ObjectId, type Filter } from "mongodb";
-import { listingsCollection, usersCollection } from "../db";
+import { listingsCollection, offersCollection, usersCollection } from "../db";
 import type { Listing } from "../types";
 
 const router = Router();
@@ -169,6 +169,33 @@ router.delete("/:id", async (req, res) => {
   }
 
   res.status(204).end();
+});
+
+// ---------- GET /api/listings/:id/offers (ofertas de un anuncio) ----------
+router.get("/:id/offers", async (req, res) => {
+  const { id } = req.params;
+
+  if (!ObjectId.isValid(id)) {
+    res.status(400).json({ error: "El id no tiene un formato válido" });
+    return;
+  }
+
+  const listingId = new ObjectId(id);
+
+  // El anuncio tiene que existir: si no, 404
+  const listing = await listingsCollection().findOne({ _id: listingId });
+  if (!listing) {
+    res.status(404).json({ error: "No existe ningún anuncio con ese id" });
+    return;
+  }
+
+  // Las ofertas guardan el id del anuncio en listing.id
+  const offers = await offersCollection()
+    .find({ "listing.id": listingId })
+    .sort({ createdAt: -1 })
+    .toArray();
+
+  res.json(offers);
 });
 
 export default router;
